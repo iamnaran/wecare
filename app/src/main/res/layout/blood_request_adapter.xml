@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+   <android.support.v7.widget.CardView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:cardUseCompatPadding="true"
+       >
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:padding="5dp"
+           >
+           <LinearLayout
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="3"
+               >
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Required on : "
+                   android:textSize="@dimen/notification_text_size"
+
+                   />
+
+               <TextView
+                   android:id="@+id/adapter_donation_date"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="2017-06-17"
+                   android:textSize="@dimen/notification_data_text_size"
+                   android:textStyle="bold"
+                   />
+
+
+           </LinearLayout>
+           <LinearLayout
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:gravity="center"
+               >
+               <ImageView
+                   android:id="@+id/call_button_request"
+                   android:layout_width="wrap_content"
+                   android:layout_height="20dp"
+                   android:text="Call now"
+                   android:src="@drawable/call"
+                   android:scaleType="fitCenter"
+                   android:layout_gravity="right"
+
+                   />
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+   </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        card_view:cardUseCompatPadding="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:background="#b3eeeeee"
+            >
+
+            <LinearLayout
+                android:id="@+id/home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:padding="4dp">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name: "
+                        android:textSize="@dimen/notification_text_size"
+                        />
+
+                    <TextView
+                        android:id="@+id/adapter_full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Narayan Panthi"
+                        android:textSize="@dimen/notification_data_text_size"
+                        android:textStyle="bold"
+                        />
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Number: "
+                        android:textSize="@dimen/notification_text_size"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/adapter_donation_contact_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+9779843194645"
+                        android:textSize="@dimen/notification_data_text_size"
+                        android:textStyle="bold"
+
+                        />
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Donation Place: "
+                        android:textSize="@dimen/notification_text_size"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/adapter_donation_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Maitighar,Kathmandu"
+                        android:textSize="@dimen/notification_data_text_size"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:tint="#777777">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="#FFE74242"
+                    android:padding="5dp"
+
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Blood Type"
+                        android:textColor="#fff"
+                        android:textSize="@dimen/notification_text_size"
+                        />
+
+                    <TextView
+                        android:id="@+id/adapter_blood_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="AB+"
+                        android:maxLength="3"
+                        android:textColor="#fff"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:padding="5dp"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
