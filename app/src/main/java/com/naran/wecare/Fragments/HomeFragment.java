@@ -159,6 +159,7 @@ public class HomeFragment extends WeCareFragment {
                     notificationList.clear();
                     Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
                     if (cacheEntry == null) {
+
                         cacheEntry = new Cache.Entry();
                     }
                     final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
