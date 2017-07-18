@@ -44,7 +44,6 @@ public class BloodDonorsDatabaseAdapter extends RecyclerView.Adapter<BloodDonors
         final BloodDatabase bloodDatabase = bloodDatabaseList.get(position);
         holder.full_name.setText(bloodDatabase.getFull_name());
         holder.blood_group.setText(bloodDatabase.getBlood_group());
-        holder.contact_number.setText(bloodDatabase.getContact_number());
         holder.age.setText(bloodDatabase.getAge());
         holder.sex.setText(bloodDatabase.getSex());
         holder.local_address.setText(bloodDatabase.getLocal_address());
@@ -89,7 +88,6 @@ public class BloodDonorsDatabaseAdapter extends RecyclerView.Adapter<BloodDonors
 
         private TextView full_name;
         private TextView blood_group;
-        private TextView contact_number;
         private TextView age;
         private TextView sex;
         private TextView local_address;
@@ -101,7 +99,6 @@ public class BloodDonorsDatabaseAdapter extends RecyclerView.Adapter<BloodDonors
             super(itemView);
             full_name = (TextView) itemView.findViewById(R.id.full_name);
             blood_group = (TextView) itemView.findViewById(R.id.blood_group);
-            contact_number = (TextView) itemView.findViewById(R.id.contact_number);
             district = (TextView) itemView.findViewById(R.id.district);
             age = (TextView) itemView.findViewById(R.id.age);
             sex = (TextView) itemView.findViewById(R.id.sex);

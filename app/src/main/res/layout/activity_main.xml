@@ -9,6 +9,18 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progressBar"-->
+        <!--style="?android:attr/progressBarStyleLarge"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_marginRight="142dp"-->
+        <!--android:layout_marginEnd="142dp"-->
+        <!--android:layout_marginTop="20dp" />-->
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -20,7 +32,7 @@
     <LinearLayout
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_alignParentBottom="true"
         android:background="@color/bottom_navigation_background"
         android:orientation="horizontal"
@@ -30,7 +42,7 @@
         <ImageView
             android:id="@+id/home"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
@@ -41,35 +53,36 @@
         <ImageView
             android:id="@+id/search"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_search_black_24dp"
+            app:srcCompat="@drawable/ic_search_blood_black_24dp"
+            android:layout_gravity="center"
             android:tint="#030628" />
 
         <ImageView
             android:id="@+id/location"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_location_on_black_24dp"
+            app:srcCompat="@drawable/ic_location_city_black_24dp"
             android:tint="#05083b" />
 
 
         <ImageView
             android:id="@+id/user"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_person_black_24dp"
+            app:srcCompat="@drawable/ic_event_note_black_24dp"
             android:tint="#280404" />
 
 

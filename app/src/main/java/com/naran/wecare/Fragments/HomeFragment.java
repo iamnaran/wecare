@@ -1,6 +1,9 @@
 package com.naran.wecare.Fragments;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,11 +38,11 @@ import java.util.List;
 
 
 public class HomeFragment extends WeCareFragment {
-
     private RecyclerView recyclerView;
     SwipeRefreshLayout swipeView;
     BloodRequestRecyclerViewAdapter bloodRequestRecyclerViewAdapter;
     List<Notification> notificationList;
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -49,15 +52,20 @@ public class HomeFragment extends WeCareFragment {
         initiliseView(view);
         initialiseListener();
         setUpRecyclerView();
-        getNotification();
         return view;
     }
 
     @Override
     protected void initiliseView(View view) {
 
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
+
+        swipeView.setColorSchemeColors(
+
+                Color.RED
+        );
 
 
 
@@ -65,21 +73,26 @@ public class HomeFragment extends WeCareFragment {
 
     @Override
     protected void initialiseListener() {
+
+        getNotification();
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeView.setRefreshing(true);
-                notificationList.clear();
-                getNotification();
-                swipeView.setRefreshing(false);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        swipeView.setRefreshing(false);
+                        notificationList.clear();
+                        getNotification();
+                        bloodRequestRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                }, 2000);
 
             }
         });
 
-
-
-
     }
+
 
     private void setUpRecyclerView() {
 
@@ -112,7 +125,6 @@ public class HomeFragment extends WeCareFragment {
                         String donation_date = jsonObject.getString(UrlConstants.KEY_DONATION_DATE);
                         String donation_place = jsonObject.getString(UrlConstants.KEY_DONATION_PLACE);
                         String donation_type = jsonObject.getString(UrlConstants.KEY_DONATION_TYPE);
-                        String description = jsonObject.getString(UrlConstants.KEY_DESCRIPTION);
 
                         Notification notification = new Notification();
 
@@ -123,7 +135,6 @@ public class HomeFragment extends WeCareFragment {
                         notification.setDonation_date(donation_date);
                         notification.setDonation_place(donation_place);
                         notification.setDonation_type(donation_type);
-                        notification.setDescription(description);
                         notificationList.add(notification);
 
                     }
@@ -145,6 +156,7 @@ public class HomeFragment extends WeCareFragment {
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
                 try {
+                    notificationList.clear();
                     Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
                     if (cacheEntry == null) {
                         cacheEntry = new Cache.Entry();
@@ -190,8 +202,11 @@ public class HomeFragment extends WeCareFragment {
                 return super.parseNetworkError(volleyError);
             }
         };
+
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(stringRequest);
 
     }
+
+
 }

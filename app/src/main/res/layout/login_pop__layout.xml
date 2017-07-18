@@ -1,138 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
 
+        >
 
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            card_view:cardUseCompatPadding="true">
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_design"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_design"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+            <Button
+                android:id="@+id/buttonOrg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/button_design"
+                android:text="Organization"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="15dp">
+
+            <!-- Email Label -->
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Username : "
-                    android:textStyle="bold"
-                    android:textSize="18dp"
-                    android:fontFamily="serif"
-                    />
+                android:layout_marginBottom="8dp">
 
                 <EditText
                     android:id="@+id/editTextUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="username"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    />
+                    android:hint="Username"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
 
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-
-
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            card_view:cardUseCompatPadding="true">
-
-            <LinearLayout
+            <!-- Password Label -->
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password :"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:fontFamily="serif"
-
-                    />
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/editTextPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    />
+                    android:hint="Password"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/emailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/editTexTEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress" />
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            >
 
             <Button
-                android:id="@+id/buttonLogin"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text=" Login "
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:shadowColor="#A8A8A8"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="5"
-                android:textAllCaps="false"
-                />
+                android:id="@+id/buttonGo"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_shape"
+                android:text="Go"
+                android:textColor="#fff" />
 
-
-                <Button
-                    android:id="@+id/buttonRegister"
-                    android:layout_width="150dp"
-                    android:layout_height="50dp"
-                    android:text=" Back to Register "
-                    android:textColor="#000"
-                    android:shadowColor="#A8A8A8"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="5"
-                    android:textAllCaps="false"
-
-                    />
 
         </LinearLayout>
-
-
     </LinearLayout>
-
-
-</ScrollView>
+</android.support.v7.widget.CardView>

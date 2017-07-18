@@ -7,8 +7,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/rippleColor</item>
-
         <item name="android:statusBarColor">@color/colorAccent</item>
     </style>
+
+    <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
+    <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+    <item name="DialogTitleText"> Please wait a sec.</item>
+    <item name="DialogSpotColor">#000000</item>
+    <item name="DialogSpotCount">7</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_bottom</item>
+    </style>
+
 
 </resources>

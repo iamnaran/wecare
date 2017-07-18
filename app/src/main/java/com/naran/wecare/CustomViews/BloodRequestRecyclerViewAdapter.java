@@ -33,6 +33,8 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         this.notificationList = notificationList;
     }
 
+
+
     @Override
     public BloodRequestRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -49,8 +51,9 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         holder.full_name.setText(notification.getFull_name());
         holder.blood_type.setText(notification.getBlood_type());
         holder.donation_date.setText(notification.getDonation_date());
-        holder.contact_number.setText(notification.getContact_number());
         holder.donation_place.setText(notification.getDonation_place());
+        holder.donation_type.setText(notification.getDonation_type());
+        holder.donation_amount.setText(notification.getBlood_amount());
 
         holder.call_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +85,11 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         return notificationList.size();
     }
 
+    @Override
+    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+        super.registerAdapterDataObserver(observer);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView full_name;
@@ -89,6 +97,8 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         private TextView contact_number;
         private TextView donation_date;
         private TextView donation_place;
+        private TextView donation_type;
+        private TextView donation_amount;
         private ImageView call_button;
 
         private ViewHolder(View itemView) {
@@ -96,10 +106,11 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
 
             full_name = (TextView) itemView.findViewById(R.id.adapter_full_name);
             blood_type = (TextView) itemView.findViewById(R.id.adapter_blood_type);
-            contact_number = (TextView) itemView.findViewById(R.id.adapter_donation_contact_number);
             donation_date = (TextView) itemView.findViewById(R.id.adapter_donation_date);
             donation_place = (TextView) itemView.findViewById(R.id.adapter_donation_place);
             call_button = (ImageView) itemView.findViewById(R.id.call_button_request);
+            donation_type = (TextView) itemView.findViewById(R.id.adapter_donation_type);
+            donation_amount = (TextView) itemView.findViewById(R.id.adapter_blood_amount);
 
 
         }

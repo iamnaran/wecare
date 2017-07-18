@@ -1,6 +1,8 @@
 package com.naran.wecare.Fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,8 +74,9 @@ public class BloodDatabaseFragment extends WeCareFragment {
         recyclerViewBloodDB = (RecyclerView) view.findViewById(R.id.recyclerViewBloodDB);
         swipeView1 = (SwipeRefreshLayout) view.findViewById(R.id.swipe1);
         searchView = (SearchView) view.findViewById(R.id.searchView);
-
-
+        swipeView1.setColorSchemeColors(
+                Color.RED
+        );
     }
 
     @Override
@@ -82,14 +85,21 @@ public class BloodDatabaseFragment extends WeCareFragment {
         swipeView1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeView1.setRefreshing(true);
-                bloodDatabaseList.clear();
-                getBloodDonorsDatabase();
-                swipeView1.setRefreshing(false);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        swipeView1.setRefreshing(false);
+                        bloodDatabaseList.clear();
+                        bloodDonorsDatabaseAdapter.notifyDataSetChanged();
+                        getBloodDonorsDatabase();
+                    }
+                }, 3000);
 
             }
         });
         searchView.setQueryHint("search blood donors");
+        searchView.onActionViewExpanded();
+        searchView.setIconified(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -114,7 +124,10 @@ public class BloodDatabaseFragment extends WeCareFragment {
             final String text = bloodDatabases.getBlood_group().toUpperCase();
             final String text1 = bloodDatabases.getDistrict().toUpperCase();
             final String text2 = bloodDatabases.getLocal_address().toUpperCase();
-            if (text.contains(query) || text1.contains(query) || text2.contains(query)){
+            final String text3 = bloodDatabases.getFull_name().toUpperCase();
+            final String text4 = bloodDatabases.getEmail().toUpperCase();
+
+            if (text.contains(query) || text1.contains(query) || text2.contains(query) || text3.contains(query) || text4.contains(query)){
                 filteredModeList.add(bloodDatabases);
             }
         }
@@ -208,7 +221,6 @@ public class BloodDatabaseFragment extends WeCareFragment {
                 }
 
             }
-
             @Override
             protected void deliverResponse(String response) {
                 super.deliverResponse(response);
@@ -218,8 +230,6 @@ public class BloodDatabaseFragment extends WeCareFragment {
             public void deliverError(VolleyError error) {
                 super.deliverError(error);
             }
-
-
         };
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -227,5 +237,6 @@ public class BloodDatabaseFragment extends WeCareFragment {
 
 
     }
+
 
 }

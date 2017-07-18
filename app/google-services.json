@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "682984580732",
+    "firebase_url": "https://notification-decc8.firebaseio.com",
+    "project_id": "notification-decc8",
+    "storage_bucket": "notification-decc8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682984580732:android:947dbcc64704859c",
+        "android_client_info": {
+          "package_name": "com.naran.wecare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682984580732-mb8i9shf49gi547mjcnu5s0qpq43l2ko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmkta4Vi8EjYOsvCbq059vxIOt2Qt7Gtg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

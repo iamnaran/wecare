@@ -3,17 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".views.activities.Homepage">
 
+
     <item
-        android:id="@+id/action_user_list"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:id="@+id/action_add_request"
+        android:icon="@drawable/ic_add_circle_outline_black_24dp"
         android:orderInCategory="100"
-        android:title=""
-        app:showAsAction="always" />
+        android:title="Add Blood Request"
+        app:showAsAction="always"
+
+        />
     <item
-        android:id="@+id/action_logout"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_account_circle_black_24dp"
         android:orderInCategory="102"
-        android:title=""
+        android:title="Profile"
         app:showAsAction="always" />
    
 </menu>

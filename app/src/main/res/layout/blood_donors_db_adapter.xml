@@ -4,20 +4,21 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="8dp"
     >
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
+        app:cardElevation="2dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp"
+            android:padding="4dp"
             >
 
             <LinearLayout
@@ -32,7 +33,8 @@
                     android:text="Divya Joyti Pokharel"
                     android:textSize="@dimen/notification_data_text_size"
                     android:textStyle="bold"
-                    android:gravity=""
+                    android:textAllCaps="true"
+                    android:fontFamily="serif"
                     />
 
 
@@ -87,7 +89,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:orientation="vertical"
-                android:padding="8dp"
+                android:padding="4dp"
 
                 >
 
@@ -105,14 +107,6 @@
                         android:orientation="horizontal"
                         >
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Age: "
-                            android:textSize="@dimen/notification_text_size"
-
-
-                            />
 
                         <TextView
                             android:id="@+id/age"
@@ -129,16 +123,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="15dp"
                         >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sex: "
-                            android:textSize="@dimen/notification_text_size"
-
-                            />
+                            android:text=",  "
+                            android:textSize="@dimen/notification_text_size" />
 
                         <TextView
                             android:id="@+id/sex"
@@ -146,9 +137,7 @@
                             android:layout_height="wrap_content"
                             android:text="Male"
                             android:textSize="@dimen/notification_data_text_size"
-                            android:textStyle="bold"
-
-                            />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -164,12 +153,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="District: "
-                        android:textSize="@dimen/notification_text_size"
-                        />
+
 
                     <TextView
                         android:id="@+id/district"
@@ -177,21 +161,12 @@
                         android:layout_height="wrap_content"
                         android:text="Nawalparasi"
                         android:textSize="@dimen/notification_data_text_size"
-                        android:textStyle="bold"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
+                        android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Local Address: "
-                        android:textSize="@dimen/notification_text_size"
-                        />
+                        android:text=", "
+                        android:textSize="@dimen/notification_text_size" />
 
                     <TextView
                         android:id="@+id/local_address"
@@ -199,40 +174,9 @@
                         android:layout_height="wrap_content"
                         android:text="Kawasoti"
                         android:textSize="@dimen/notification_data_text_size"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Contact Number: "
-                        android:textSize="@dimen/notification_text_size"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/contact_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+9779843194645"
-                        android:textSize="@dimen/notification_data_text_size"
-                        android:textStyle="bold"
-
-                        />
-
-
-                </LinearLayout>
-
-
-
 
 
                 <LinearLayout
@@ -240,13 +184,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email: "
-                        android:textSize="@dimen/notification_text_size"
-
-                        />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="20dp"
+                        android:tint="#e78484"
+                        app:srcCompat="@drawable/ic_email_black_24dp"
+                        android:contentDescription="@string/app_name" />
 
                     <TextView
                         android:id="@+id/email"
@@ -255,7 +198,7 @@
                         android:text="nrn.panthi@gmail.com"
                         android:textSize="@dimen/notification_data_text_size"
                         android:textStyle="bold"
-
+                        android:layout_marginStart="3dp"
                         />
 
                 </LinearLayout>
@@ -269,8 +212,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="#FFE74242"
-                >
+                android:background="#FFE74242">
 
 
                 <LinearLayout
@@ -294,7 +236,7 @@
                         android:maxLength="3"
                         android:text="AB+"
                         android:textColor="#fff"
-                        android:textSize="30sp"
+                        android:textSize="33sp"
                         android:textStyle="bold" />
 
 
