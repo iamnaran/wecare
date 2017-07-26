@@ -3,7 +3,7 @@ package com.naran.wecare.CustomViews;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.AlarmClock;
+import android.provider.CalendarContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +44,7 @@ public class DonationEventAdapter extends RecyclerView.Adapter<DonationEventAdap
     public void onBindViewHolder(DonationEventAdapter.ViewHolders holder, int position) {
 
         final Event event = eventList.get(position);
+
         holder.event_name.setText(event.getEvent_name());
         holder.location.setText(event.getLocation());
         holder.time_start.setText(event.getTime_start());
@@ -66,10 +67,18 @@ public class DonationEventAdapter extends RecyclerView.Adapter<DonationEventAdap
         holder.addAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openClockIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-                openClockIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                openClockIntent.putExtra(AlarmClock.EXTRA_HOUR, 11);
-                context.startActivity(openClockIntent);
+
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.getTime_start())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.getTime_end())
+                        .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, event.getEvent_date())
+                        .putExtra(CalendarContract.Events.TITLE, event.getEvent_name())
+                        .putExtra(CalendarContract.Events.DESCRIPTION, event.getEvent_date())
+                        .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getLocation())
+                        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                        .putExtra(Intent.EXTRA_EMAIL, "we care");
+                context.startActivity(intent);
 
             }
         });

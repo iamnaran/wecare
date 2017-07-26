@@ -7,11 +7,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by NaRan on 5/8/17.
+ * Created by NaRan on 7/24/17.
  */
 
 public class MySingleton {
-
     private static MySingleton mInstance;
     private static Context mCtx;
     private RequestQueue requestQueue;
@@ -43,5 +42,4 @@ public class MySingleton {
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
-
 }

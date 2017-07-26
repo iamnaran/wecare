@@ -15,10 +15,12 @@
        >
 
        <LinearLayout
+           android:id="@+id/changeLayout"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="horizontal"
            android:padding="3dp"
+           android:baselineAligned="false"
            >
            <LinearLayout
                android:layout_width="0dp"
@@ -34,13 +36,8 @@
                    android:text="2017-06-17"
                    android:textSize="@dimen/notification_data_text_size"
                    android:textStyle="bold"
-                   />
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text=", "
-                   android:textSize="@dimen/notification_data_text_size"
-                   android:textStyle="bold"
+                   android:layout_marginStart="5dp"
+                   android:textColor="#635f5f"
                    />
 
                <TextView
@@ -48,8 +45,10 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="Tomorrow"
+                   android:textAllCaps="true"
                    android:textSize="@dimen/notification_data_text_size"
                    android:textStyle="bold"
+                   android:layout_marginStart="10dp"
                    />
 
 
@@ -84,7 +83,7 @@
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
         card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="2dp"
+        card_view:cardElevation="3dp"
         >
 
         <LinearLayout
@@ -217,6 +216,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="AB+"
+                        android:textAllCaps="true"
                         android:maxLength="3"
                         android:textColor="#fff"
                         android:textSize="30sp"

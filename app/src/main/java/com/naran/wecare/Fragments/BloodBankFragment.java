@@ -118,6 +118,15 @@ public class BloodBankFragment extends WeCareFragment {
     @Override
     protected void initialiseListener() {
 
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                        swipeView.setRefreshing(false);
+
+            }
+        });
+
 
 
     }

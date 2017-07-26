@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.naran.wecare">
 
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -18,22 +20,7 @@
 
         </activity>
 
-        <receiver android:name="layout.EventWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/event_widget_info" />
-        </receiver>
-
-        <service
-            android:name="layout.WidgetService"
-            android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <activity android:name=".fcm.FcmActivity">
+        <activity android:name=".Welcome.WelcomeActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,12 +30,17 @@
 
         </activity>
 
-        <service android:name=".fcm.FcmInstanceIdService">
+        <service
+            android:name=".fcm.FcmInstanceIdService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.FcmMessagingService">
+
+        <service
+            android:name=".fcm.FcmMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

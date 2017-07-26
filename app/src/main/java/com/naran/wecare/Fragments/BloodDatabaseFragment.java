@@ -2,8 +2,8 @@ package com.naran.wecare.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.naran.wecare.CustomViews.BloodDonorsDatabaseAdapter;
 import com.naran.wecare.Models.BloodDatabase;
+import com.naran.wecare.Models.SharedPrefManager;
 import com.naran.wecare.R;
 import com.naran.wecare.URLConstants.UrlConstants;
 
@@ -44,13 +46,13 @@ public class BloodDatabaseFragment extends WeCareFragment {
     BloodDonorsDatabaseAdapter bloodDonorsDatabaseAdapter;
     List<BloodDatabase> bloodDatabaseList;
     SearchView searchView;
-
+    private boolean activityStartup = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fragment_blood_database,container,false);
+        View view = inflater.inflate(R.layout.fragment_blood_database, container, false);
         initiliseView(view);
         initialiseListener();
         setUpRecyclerView();
@@ -77,7 +79,26 @@ public class BloodDatabaseFragment extends WeCareFragment {
         swipeView1.setColorSchemeColors(
                 Color.RED
         );
+
+        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.addUser);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                if (SharedPrefManager.getInstance(getContext()).isLoggedIn() || SharedPrefManager.getInstance(getContext()).isOrgLoggedIn()) {
+
+                    showPostUserData();
+
+                } else {
+                    Toast.makeText(getContext(), "Please Login ", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
     }
+
+
 
     @Override
     protected void initialiseListener() {
@@ -85,21 +106,27 @@ public class BloodDatabaseFragment extends WeCareFragment {
         swipeView1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
-                        swipeView1.setRefreshing(false);
-                        bloodDatabaseList.clear();
-                        bloodDonorsDatabaseAdapter.notifyDataSetChanged();
-                        getBloodDonorsDatabase();
-                    }
-                }, 3000);
+                bloodDatabaseList.clear();
+                bloodDonorsDatabaseAdapter.notifyDataSetChanged();
+                getBloodDonorsDatabase();
+                swipeView1.setRefreshing(false);
 
             }
         });
         searchView.setQueryHint("search blood donors");
-        searchView.onActionViewExpanded();
-        searchView.setIconified(false);
+        searchView.setIconifiedByDefault(false);
+        searchView.setBackgroundColor(Color.TRANSPARENT);
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (activityStartup) {
+                        searchView.clearFocus();
+                        activityStartup = false;
+                    }
+                }
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -108,7 +135,7 @@ public class BloodDatabaseFragment extends WeCareFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                final List<BloodDatabase> filterModeList = filter(bloodDatabaseList , newText);
+                final List<BloodDatabase> filterModeList = filter(bloodDatabaseList, newText);
                 bloodDonorsDatabaseAdapter.setFilter(filterModeList);
                 return true;
             }
@@ -119,15 +146,15 @@ public class BloodDatabaseFragment extends WeCareFragment {
     private List<BloodDatabase> filter(List<BloodDatabase> bloodDatabaseList, String query) {
 
         query = query.toUpperCase();
-        final  List<BloodDatabase> filteredModeList = new ArrayList<>();
-        for (BloodDatabase bloodDatabases : bloodDatabaseList){
+        final List<BloodDatabase> filteredModeList = new ArrayList<>();
+        for (BloodDatabase bloodDatabases : bloodDatabaseList) {
             final String text = bloodDatabases.getBlood_group().toUpperCase();
             final String text1 = bloodDatabases.getDistrict().toUpperCase();
             final String text2 = bloodDatabases.getLocal_address().toUpperCase();
             final String text3 = bloodDatabases.getFull_name().toUpperCase();
             final String text4 = bloodDatabases.getEmail().toUpperCase();
 
-            if (text.contains(query) || text1.contains(query) || text2.contains(query) || text3.contains(query) || text4.contains(query)){
+            if (text.contains(query) || text1.contains(query) || text2.contains(query) || text3.contains(query) || text4.contains(query)) {
                 filteredModeList.add(bloodDatabases);
             }
         }
@@ -221,6 +248,7 @@ public class BloodDatabaseFragment extends WeCareFragment {
                 }
 
             }
+
             @Override
             protected void deliverResponse(String response) {
                 super.deliverResponse(response);
@@ -238,5 +266,9 @@ public class BloodDatabaseFragment extends WeCareFragment {
 
     }
 
+    private void showPostUserData() {
+
+
+    }
 
 }

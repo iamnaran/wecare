@@ -9,7 +9,7 @@ public class UrlConstants {
     public static final String BASE_URL = "https://wecareyou.000webhostapp.com/";
 
 
-    //fcm data
+    //fcm notification
 
     public static final String URL_FCM = BASE_URL + "fcm/fcm_insert.php/";
 

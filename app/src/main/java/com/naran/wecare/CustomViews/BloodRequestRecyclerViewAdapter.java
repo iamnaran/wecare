@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.naran.wecare.Models.Notification;
 import com.naran.wecare.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,12 +31,16 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
     private List<Notification> notificationList;
     private int lastPosition = -1;
 
+    private Date date;
+    private Date currentDate = new Date();
+    private Date tomDate = new Date(currentDate.getTime() - (1000 * 60 * 60 * 24));
+
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+
     public BloodRequestRecyclerViewAdapter(Context context, List<Notification> notificationList) {
         this.context = context;
         this.notificationList = notificationList;
     }
-
-
 
     @Override
     public BloodRequestRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,6 +62,31 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         holder.donation_type.setText(notification.getDonation_type());
         holder.donation_amount.setText(notification.getBlood_amount());
 
+        String dateCheck = notification.getDonation_date();
+
+
+        int status = 0;
+        try {
+            date = dateFormatter.parse(dateCheck);
+
+            if (date.before(tomDate)){
+
+                status = 1;
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (status == 1){
+
+//            holder.donation_date.setText(R.string.not_available);
+//            holder.call_button.setVisibility(View.INVISIBLE);
+//            holder.donation_type.setVisibility(View.INVISIBLE);
+
+        }
+
+
         holder.call_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +96,9 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
                 context.startActivity(intent);
             }
         });
+
+
+
 
         Animation animation = AnimationUtils.loadAnimation(context,
                 (position > lastPosition) ? R.anim.up_from_bottom
@@ -94,7 +129,6 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
 
         private TextView full_name;
         private TextView blood_type;
-        private TextView contact_number;
         private TextView donation_date;
         private TextView donation_place;
         private TextView donation_type;
@@ -111,7 +145,6 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
             call_button = (ImageView) itemView.findViewById(R.id.call_button_request);
             donation_type = (TextView) itemView.findViewById(R.id.adapter_donation_type);
             donation_amount = (TextView) itemView.findViewById(R.id.adapter_blood_amount);
-
 
         }
     }

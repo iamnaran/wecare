@@ -35,13 +35,12 @@
         <item> .25 pints </item>
         <item> .5 pints </item>
         <item> 1 pints </item>
-        <item> 2 pints </item>
+        <item> 2+ pints </item>
     </string-array>
     <string-array name="donation_type">
         <item> Urgent </item>
-        <item> Tomorrow </item>
-        <item> This week </item>
         <item> Later </item>
+
     </string-array>
     <string name="appwidget_text">Event Widget</string>
     <string name="configure">Configure</string>
@@ -60,6 +59,26 @@
 
     <string name="FCM_PREF">com.naran.wecare.fcm_pref</string>
     <string name="FCM_TOKEN">com.naran.wecare.fcm_token</string>
+
+
+    <string name="not_available">NOT AVAILABLE</string>
+    <string name="hintdot">......</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">We Care</string>
+    <string name="slide_1_desc"> Requesting blood donation have never been this easy!</string>
+
+    <string name="slide_2_title"> Blood Bank Database </string>
+    <string name="slide_2_desc">  Find about amount of bloods available in different blood banks! </string>
+
+    <string name="slide_3_title"> Search Donors </string>
+    <string name="slide_3_desc"> Upload your blood information. Search among donors. Enormous number of donors! </string>
+
+    <string name="slide_4_title"> Blood Donation Event </string>
+    <string name="slide_4_desc"> Know about blood donation events happening now !</string>
 
 
 </resources>

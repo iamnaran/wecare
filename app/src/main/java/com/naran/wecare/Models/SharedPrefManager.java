@@ -18,6 +18,13 @@ public class SharedPrefManager {
     private static final String KEY_ORG_EMAIL = "orgEmail";
     private static final String KEY_ORG_ID = "orgID";
 
+    private static final String TOKEN_SHARED_PREF_NAME = "tokens";
+
+    private static final String KEY_TOKEN_ID = "token_id";
+    private static final String KEY_TOKEN = "app_id";
+
+
+
     private SharedPrefManager(Context context) {
         mCtx = context;
 
@@ -28,6 +35,27 @@ public class SharedPrefManager {
             mInstance = new SharedPrefManager(context);
         }
         return mInstance;
+    }
+
+    public boolean tokenSend(int id, String app_id) {
+
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(TOKEN_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_TOKEN_ID, id);
+        editor.putString(KEY_TOKEN, app_id);
+        editor.apply();
+
+        return true;
+    }
+
+    public boolean isTokenExist(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(TOKEN_SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        if (sharedPreferences.getString(KEY_TOKEN, null) != null) {
+            return true;
+        }
+
+        return false;
+
     }
 
     public boolean userLogin(int id, String username, String email) {
@@ -42,6 +70,8 @@ public class SharedPrefManager {
 
         return true;
     }
+
+
 
     public boolean userOrganizationLogin(int id, String username, String email) {
 
@@ -107,4 +137,8 @@ public class SharedPrefManager {
         return sharedPreferences.getString(KEY_ORG_EMAIL, null);
 
     }
+
+
+
+
 }

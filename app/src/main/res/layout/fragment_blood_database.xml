@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe1"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipe1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:focusableInTouchMode="true"
+        tools:context="com.naran.wecare.MainActivity">
 
-        <SearchView
-            android:id="@+id/searchView"
-            style="@style/Widget.AppCompat.SearchView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:focusableInTouchMode="true"
-            android:queryHint="search blood donors">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        </SearchView>
+            <SearchView
+                android:id="@+id/searchView"
+                style="@style/Widget.AppCompat.SearchView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:focusableInTouchMode="true"
+                android:queryHint="search blood donors">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewBloodDB"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </SearchView>
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewBloodDB"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </LinearLayout>
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
 
 
-</android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addUser"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="20dp"
+        android:tint="#fff"
+        app:srcCompat="@drawable/ic_note_add_black_24dp" />
+
+</FrameLayout>

@@ -2,6 +2,8 @@ package com.naran.wecare;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -11,12 +13,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -42,6 +46,7 @@ import com.naran.wecare.Fragments.HomeFragment;
 import com.naran.wecare.Models.RequestHandler;
 import com.naran.wecare.Models.SharedPrefManager;
 import com.naran.wecare.URLConstants.UrlConstants;
+import com.naran.wecare.fcm.MySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +76,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sendToken();
         initiliseView();
         initialiseListener();
 
@@ -118,6 +124,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
 
@@ -282,56 +289,74 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                 @Override
                 public void onClick(View v) {
                     progressDialog = new SpotsDialog(builder.getContext(), R.style.Custom);
-                    progressDialog.show();
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.POST_BLOOD_REQUEST_URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+// p indicates post
 
-                            Toast.makeText(getApplicationContext(), " Request " + response, Toast.LENGTH_SHORT).show();
-                            progressDialog.hide();
-                            alertDialog1.dismiss();
+                    final String p_full_name = full_name.getText().toString().trim();
+                    final String p_blood_type = blood_type.getText().toString().trim();
+                    final String p_blood_amount = blood_amount.getText().toString().trim();
+                    final String p_contact_number = contact_number.getText().toString().trim();
+                    final String p_donation_date = donation_date.getText().toString().trim();
+                    final String p_donation_place = donation_place.getText().toString().trim();
+                    final String p_donation_type = donation_type.getText().toString().trim();
 
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                    if (p_full_name.isEmpty() || p_blood_type.isEmpty() || p_blood_amount.isEmpty() || p_contact_number.isEmpty()
+                            || p_donation_date.isEmpty() || p_donation_place.isEmpty() || p_donation_type.isEmpty()
+                            ) {
+                        Toast.makeText(MainActivity.this, " All fields are mandatory ", Toast.LENGTH_SHORT).show();
+                    } else {
+                        progressDialog.show();
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.POST_BLOOD_REQUEST_URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
 
-                            Toast.makeText(getApplicationContext(), " Request " + error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), " Request " + response, Toast.LENGTH_SHORT).show();
+                                progressDialog.hide();
+                                alertDialog1.dismiss();
 
-                            progressDialog.hide();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() {
+                                Toast.makeText(getApplicationContext(), " Request " + error, Toast.LENGTH_SHORT).show();
 
-                            Map<String, String> params = new HashMap<String, String>();
+                                progressDialog.hide();
 
-                            params.put(UrlConstants.KEY_FULLNAME, full_name.getText().toString().trim());
-                            params.put(UrlConstants.KEY_BLOOD_TYPE, blood_type.getText().toString().trim());
-                            params.put(UrlConstants.KEY_BLOOD_AMOUNT, blood_amount.getText().toString().trim());
-                            params.put(UrlConstants.KEY_CONTACT_NUMBER, contact_number.getText().toString().trim());
-                            params.put(UrlConstants.KEY_DONATION_DATE, donation_date.getText().toString().trim());
-                            params.put(UrlConstants.KEY_DONATION_PLACE, donation_place.getText().toString().trim());
-                            params.put(UrlConstants.KEY_DONATION_TYPE, donation_type.getText().toString().trim());
-                            return params;
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() {
 
-                        }
-                    };
+                                Map<String, String> params = new HashMap<String, String>();
 
-                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    requestQueue.add(stringRequest);
+                                params.put(UrlConstants.KEY_FULLNAME, p_full_name);
+                                params.put(UrlConstants.KEY_BLOOD_TYPE, p_blood_type);
+                                params.put(UrlConstants.KEY_BLOOD_AMOUNT, p_blood_amount);
+                                params.put(UrlConstants.KEY_CONTACT_NUMBER, p_contact_number);
+                                params.put(UrlConstants.KEY_DONATION_DATE, p_donation_date);
+                                params.put(UrlConstants.KEY_DONATION_PLACE, p_donation_place);
+                                params.put(UrlConstants.KEY_DONATION_TYPE, p_donation_type);
+                                return params;
+
+                            }
+                        };
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                        requestQueue.add(stringRequest);
+
+
+                    }
+
 
                 }
             });
 
             if (alertDialog1.getWindow() != null)
                 alertDialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            alertDialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            alertDialog1.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-            alertDialog1.show();
-
+                alertDialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                alertDialog1.getWindow().getAttributes().windowAnimations = Animation.ABSOLUTE;
+                alertDialog1.show();
 
 
         }
@@ -437,8 +462,8 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                             final String username = editTextUser.getText().toString().trim();
                             final String password = editTextPass.getText().toString().trim();
                             if (username.isEmpty() || password.isEmpty()) {
-                                editTextUser.setError("");
-                                editTextPass.setError("");
+                                editTextUser.setError(" All fields are mandatory");
+                                editTextPass.setError("All fields are mandatory");
                             } else {
 
                                 progressDialog.show();
@@ -475,7 +500,8 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                                             public void onErrorResponse(VolleyError error) {
                                                 progressDialog.dismiss();
 
-                                                Toast.makeText(getApplicationContext(), " Something went wrong.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), " Something went wrong ", Toast.LENGTH_SHORT).show();
+
 
                                             }
                                         }
@@ -543,9 +569,9 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
                             }
                             if (email.isEmpty() && username.isEmpty() || password.isEmpty()) {
-                                editTextUser.setError("Field shouldn't be empty");
-                                editTextPass.setError("Field shouldn't be empty");
-                                editTextEmail.setError("Field shouldn't be empty");
+                                editTextUser.setError("All fields are mandatory");
+                                editTextPass.setError("All fields are mandatory");
+                                editTextEmail.setError("All fields are mandatory");
 
                             }
                             if (!email.matches(emailPattern)) {
@@ -558,8 +584,8 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                             final String username = editTextUser.getText().toString().trim();
                             final String password = editTextPass.getText().toString().trim();
                             if (username.isEmpty() || password.isEmpty()) {
-                                editTextUser.setError("");
-                                editTextPass.setError("");
+                                editTextUser.setError("All fields are mandatory");
+                                editTextPass.setError("All fields are mandatory");
                             } else {
 
                                 progressDialog.show();
@@ -619,6 +645,41 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void sendToken() {
+        Toast.makeText(this, "Welcome to We Care", Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.FCM_PREF), Context.MODE_PRIVATE);
+        final String token = sharedPreferences.getString(getString(R.string.FCM_TOKEN),"");
+        Log.e("Token", token);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.URL_FCM, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(getApplicationContext(), response , Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), " Error in sending token", Toast.LENGTH_SHORT).show();
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("app_id",token);
+                return params;
+            }
+        };
+        MySingleton.getmInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 
 
