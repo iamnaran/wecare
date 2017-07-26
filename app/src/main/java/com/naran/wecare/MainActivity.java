@@ -667,7 +667,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), " Error in sending token", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), " Error in receiving token", Toast.LENGTH_SHORT).show();
 
             }
         })
