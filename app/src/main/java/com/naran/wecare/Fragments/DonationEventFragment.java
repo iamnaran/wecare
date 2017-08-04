@@ -42,8 +42,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +64,11 @@ public class DonationEventFragment extends WeCareFragment {
     int sYear;
     int sMonth;
     int sDay;
-    String date = "";
+    String datePicked = "";
+    private Date date;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+    private Date currentDate = new Date();
+    private Date todayDate = new Date(currentDate.getTime());
 
 
     @Nullable
@@ -98,7 +105,8 @@ public class DonationEventFragment extends WeCareFragment {
         );
 
         FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.addEvent);
-        myFab.startAnimation(myAni);
+
+        myFab.setVisibility(View.INVISIBLE);
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -113,6 +121,14 @@ public class DonationEventFragment extends WeCareFragment {
 
             }
         });
+
+        if (SharedPrefManager.getInstance(getContext()).isLoggedIn() || SharedPrefManager.getInstance(getContext()).isOrgLoggedIn()) {
+
+            myFab.setVisibility(View.VISIBLE);
+            myFab.startAnimation(myAni);
+
+        }
+
     }
 
     @Override
@@ -122,11 +138,8 @@ public class DonationEventFragment extends WeCareFragment {
             @Override
             public void onRefresh() {
 
-                swipeView.setRefreshing(true);
-                getDonationEvent();
                 eventList.clear();
-                donationEventAdapter.notifyDataSetChanged();
-                swipeView.setRefreshing(false);
+                getDonationEvent();
             }
         });
 
@@ -169,6 +182,7 @@ public class DonationEventFragment extends WeCareFragment {
 
                     }
                     donationEventAdapter.notifyDataSetChanged();
+                    swipeView.setRefreshing(false);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -179,6 +193,11 @@ public class DonationEventFragment extends WeCareFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+
+                swipeView.setRefreshing(false);
+
 
             }
         });
@@ -241,6 +260,7 @@ public class DonationEventFragment extends WeCareFragment {
     }
 
     private void showPostEventDialog() {
+
         final Dialog dialog = new Dialog(getActivity(), R.style.AppTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.post_event_layout);
@@ -280,12 +300,30 @@ public class DonationEventFragment extends WeCareFragment {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                eventDate.setText(date);
+                                datePicked = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                                eventDate.setText(datePicked);
+
+                                try {
+                                    date = dateFormatter.parse(datePicked);
+
+                                    if (date.before(todayDate)) {
+
+                                        eventDate.setText("");
+                                        eventDate.requestFocus();
+                                        eventDate.setError("You cannot select Past Date");
+
+                                    } else {
+                                        eventDate.setError(null);
+                                        eventDate.setText(datePicked);
+                                    }
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         }, sYear, sMonth, sDay);
-                datePickerDialog.setTitle(" Select Event Date");
+                datePickerDialog.setTitle(" SELECT EVENT DATE ");
                 datePickerDialog.show();
 
             }
@@ -304,7 +342,7 @@ public class DonationEventFragment extends WeCareFragment {
                         startTime.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle(" Select Event Start Time");
+                mTimePicker.setTitle(" SELECT EVENT START TIME ");
                 mTimePicker.show();
 
             }
@@ -323,7 +361,7 @@ public class DonationEventFragment extends WeCareFragment {
                         endTime.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle(" Select Event End Time");
+                mTimePicker.setTitle(" SELECT EVENT END TIME ");
                 mTimePicker.show();
 
             }
@@ -335,57 +373,81 @@ public class DonationEventFragment extends WeCareFragment {
             @Override
             public void onClick(View v) {
 
-                progressDialog = new SpotsDialog(getContext(), R.style.Custom);
-                progressDialog.show();
+                String pEventName  = eventName.getText().toString().trim();
+                String pEventLocation  = eventLocation.getText().toString().trim();
+                String pEventContactNumber  = eventContactNumber.getText().toString().trim();
+                String pEventStartTime  = startTime.getText().toString().trim();
+                String pEventEndTime  = endTime.getText().toString().trim();
+                String pEventDate  = eventDate.getText().toString().trim();
 
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.POST_EVENT, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                if (pEventName.isEmpty() || pEventDate.isEmpty()
+                            || pEventLocation.isEmpty() ||  pEventContactNumber.isEmpty() || pEventStartTime.isEmpty()
+                            || pEventEndTime.isEmpty()){
 
-                        Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-                        progressDialog.hide();
-                        dialog.dismiss();
-                        progressDialog.cancel();
+                    Toast.makeText(getContext(), " All fields are mandatory ", Toast.LENGTH_SHORT).show();
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                }else {
 
-                        Toast.makeText(getContext(), "Oops ! Some error occur :( " + error, Toast.LENGTH_SHORT).show();
+                    progressDialog = new SpotsDialog(getContext(), R.style.Custom);
+                    progressDialog.show();
 
-                        progressDialog.hide();
 
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.POST_EVENT, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                        Map<String, String> params = new HashMap<String, String>();
+                            Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+                            progressDialog.hide();
+                            dialog.dismiss();
+                            progressDialog.cancel();
 
-                        params.put(UrlConstants.KEY_EVENT_NAME, eventName.getText().toString().trim());
-                        params.put(UrlConstants.KEY_EVENT_LOCATION, eventLocation.getText().toString().trim());
-                        params.put(UrlConstants.KEY_CONTACT_NUMBER, eventContactNumber.getText().toString().trim());
-                        params.put(UrlConstants.KEY_EVENT_START_TIME, startTime.getText().toString().trim());
-                        params.put(UrlConstants.KEY_EVENT_END_TIME, endTime.getText().toString().trim());
-                        params.put(UrlConstants.KEY_EVENT_DATE, eventDate.getText().toString().trim());
-                        return params;
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                };
+                            Toast.makeText(getContext(), "Oops ! Some error occur :( " + error, Toast.LENGTH_SHORT).show();
 
-                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                requestQueue.add(stringRequest);
+                            progressDialog.hide();
+
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+
+                            Map<String, String> params = new HashMap<String, String>();
+
+                            params.put(UrlConstants.KEY_EVENT_NAME, eventName.getText().toString().trim());
+                            params.put(UrlConstants.KEY_EVENT_LOCATION, eventLocation.getText().toString().trim());
+                            params.put(UrlConstants.KEY_CONTACT_NUMBER, eventContactNumber.getText().toString().trim());
+                            params.put(UrlConstants.KEY_EVENT_START_TIME, startTime.getText().toString().trim());
+                            params.put(UrlConstants.KEY_EVENT_END_TIME, endTime.getText().toString().trim());
+                            params.put(UrlConstants.KEY_EVENT_DATE, eventDate.getText().toString().trim());
+                            return params;
+
+                        }
+                    };
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                    requestQueue.add(stringRequest);
+
+
+
+                }
 
             }
         });
+
+
 
         if (dialog.getWindow() != null)
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.show();
+
+
 
 
     }

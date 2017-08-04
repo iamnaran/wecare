@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">We Care</string>
+    <string name="app_name">NeedBlood</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -12,11 +12,11 @@
 
     <string name="info">Help other to find you. Add your blood group information to the database.</string>
     <string name="terms">I agree to the Terms and Conditions of WeCare.</string>
-    <string name="Welcome">Welcome to We Care</string>
-    <string name="donations_events">Donations Events</string>
+    <string name="Welcome">Welcome to NeedBlood </string>
+    <string name="donations_events">Donation Events</string>
 
     <string name="event_post">Please fill up form to add new blood donation event</string>
-    <string name="hello">Donation Request</string>
+    <string name="hello">Donation Requests</string>
 
     <string-array name="blood_group_arrays">
         <item>A+</item>
@@ -37,9 +37,18 @@
         <item> 1 pints </item>
         <item> 2+ pints </item>
     </string-array>
+
+    <string-array name="sex">
+
+        <item> Male </item>
+        <item> Female </item>
+    </string-array>
+
+
+
     <string-array name="donation_type">
-        <item> Urgent </item>
-        <item> Later </item>
+        <item> urgent </item>
+        <item> later </item>
 
     </string-array>
     <string name="appwidget_text">Event Widget</string>
@@ -68,17 +77,20 @@
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
-    <string name="slide_1_title">We Care</string>
-    <string name="slide_1_desc"> Requesting blood donation have never been this easy!</string>
+    <string name="slide_1_title">Request Blood</string>
+    <string name="slide_1_desc"> Donating blood saves lives, so they can thrive. </string>
 
     <string name="slide_2_title"> Blood Bank Database </string>
-    <string name="slide_2_desc">  Find about amount of bloods available in different blood banks! </string>
+    <string name="slide_2_desc">  Know the blood stock available in different blood banks! </string>
 
     <string name="slide_3_title"> Search Donors </string>
-    <string name="slide_3_desc"> Upload your blood information. Search among donors. Enormous number of donors! </string>
+    <string name="slide_3_desc"> Upload your information and Search among donors! </string>
 
     <string name="slide_4_title"> Blood Donation Event </string>
-    <string name="slide_4_desc"> Know about blood donation events happening now !</string>
+    <string name="slide_4_desc"> Know about upcoming and ongoing blood donation campaign!</string>
+    <string name="donation_expired">DONATION EXPIRED</string>
+    <string name="pints">pints</string>
+    <string name="status">Status</string>
 
 
 </resources>

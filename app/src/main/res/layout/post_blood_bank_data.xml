@@ -13,12 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/cross"
@@ -27,7 +27,7 @@
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:tint="@color/colorAccent"
                 app:srcCompat="@drawable/ic_close_black_24dp" />
 
@@ -37,8 +37,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
-                android:singleLine="true"
                 android:fontFamily="sans-serif-medium"
+                android:singleLine="true"
                 android:text="@string/update_available_blood_data"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="13sp" />
@@ -47,14 +47,14 @@
                 android:id="@+id/done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
-                android:padding="15dp"
+                android:padding="10dp"
                 android:tint="@color/colorAccent"
-                app:srcCompat="@drawable/ic_done_black_24dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                app:srcCompat="@drawable/ic_done_black_24dp" />
 
         </RelativeLayout>
 
@@ -68,44 +68,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="3dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6">
-
-                    <TextView
-                        android:id="@+id/full_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:text="Red cross blood bank"
-                        android:textAllCaps="true"
-                        android:singleLine="true"
-                        android:textSize="@dimen/notification_data_text_size"
-                        android:textStyle="bold" />
+                android:orientation="horizontal">
 
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/call_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_gravity="right"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/call" />
-
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/org_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="serif"
+                    android:padding="5dp"
+                    android:text="Red cross blood bank "
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/notification_data_text_size"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -170,7 +146,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
                     android:orientation="vertical">
 
@@ -180,9 +156,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="4"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="number"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -249,7 +226,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
                     android:orientation="vertical">
 
@@ -259,9 +236,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="4"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:inputType="number"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -327,7 +305,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
                     android:orientation="vertical">
 
@@ -337,8 +315,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:maxLines="1"
                         android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1"
                         android:singleLine="true"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -406,8 +385,9 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
+
                     android:orientation="vertical">
 
 
@@ -416,8 +396,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:maxLines="1"
                         android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1"
                         android:singleLine="true"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -485,7 +466,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
                     android:orientation="vertical">
 
@@ -495,10 +476,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:maxLines="1"
-                        android:textSize="24sp"
                         android:inputType="number"
+
+                        android:maxLength="4"
+                        android:maxLines="1"
                         android:singleLine="true"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
 
@@ -563,21 +546,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
+                    android:maxLength="4"
                     android:orientation="vertical">
-
 
                     <EditText
                         android:id="@+id/oN"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:maxLines="1"
-                        android:textSize="24sp"
                         android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1"
                         android:singleLine="true"
-
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
 
@@ -642,7 +625,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
                     android:orientation="vertical">
 
@@ -652,10 +635,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:maxLines="1"
-                        android:textSize="24sp"
-                        android:singleLine="true"
                         android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
 
@@ -720,7 +704,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.6"
                     android:background="#b3eeeeee"
                     android:orientation="vertical">
 
@@ -730,10 +714,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:maxLines="1"
-                        android:textSize="24sp"
                         android:inputType="number"
+                        android:maxLength="4"
+                        android:maxLines="1"
                         android:singleLine="true"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
 

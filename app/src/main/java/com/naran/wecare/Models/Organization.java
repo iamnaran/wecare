@@ -5,9 +5,7 @@ package com.naran.wecare.Models;
  */
 
 public class Organization {
-    private String org_name;
-    private String contact_number;
-    private String update_date;
+    private String userName;
     private String aP;
     private String aN;
     private String bP;
@@ -16,11 +14,10 @@ public class Organization {
     private String abN;
     private String oP;
     private String oN;
+    private String contactNumber;
 
-    public Organization(String org_name, String contact_number, String update_date, String aP, String aN, String bP, String bN, String abP, String abN, String oP, String oN) {
-        this.org_name = org_name;
-        this.contact_number = contact_number;
-        this.update_date = update_date;
+    public Organization(String userName, String aP, String aN, String bP, String bN, String abP, String abN, String oP, String oN, String contactNumber) {
+        this.userName = userName;
         this.aP = aP;
         this.aN = aN;
         this.bP = bP;
@@ -29,34 +26,28 @@ public class Organization {
         this.abN = abN;
         this.oP = oP;
         this.oN = oN;
+        this.contactNumber = contactNumber;
     }
 
     public Organization() {
 
     }
 
-    public String getOrg_name() {
-        return org_name;
+
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setOrg_name(String org_name) {
-        this.org_name = org_name;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public String getContact_number() {
-        return contact_number;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setContact_number(String contact_number) {
-        this.contact_number = contact_number;
-    }
-
-    public String getUpdate_date() {
-        return update_date;
-    }
-
-    public void setUpdate_date(String update_date) {
-        this.update_date = update_date;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getaP() {

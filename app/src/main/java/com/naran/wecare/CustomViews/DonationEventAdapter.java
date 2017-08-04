@@ -27,6 +27,7 @@ public class DonationEventAdapter extends RecyclerView.Adapter<DonationEventAdap
     private Context context;
     private List<Event> eventList;
     private int lastPosition = -1;
+
     public DonationEventAdapter(Context context, List<Event> eventList) {
         this.context = context;
         this.eventList = eventList;
@@ -35,7 +36,7 @@ public class DonationEventAdapter extends RecyclerView.Adapter<DonationEventAdap
     @Override
     public DonationEventAdapter.ViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_details_adapter,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_details_adapter, parent, false);
 
         return new DonationEventAdapter.ViewHolders(view);
     }
@@ -113,6 +114,8 @@ public class DonationEventAdapter extends RecyclerView.Adapter<DonationEventAdap
         private ImageView callButton;
         private ImageView addAlarm;
 
+        private ImageView imageDonate;
+
         public ViewHolders(View itemView) {
             super(itemView);
 
@@ -123,6 +126,9 @@ public class DonationEventAdapter extends RecyclerView.Adapter<DonationEventAdap
             event_date = (TextView) itemView.findViewById(R.id.event_date);
             callButton = (ImageView) itemView.findViewById(R.id.call_button);
             addAlarm = (ImageView) itemView.findViewById(R.id.addAlarm);
+            imageDonate = (ImageView) itemView.findViewById(R.id.imageDonate);
+
+
 
 
         }

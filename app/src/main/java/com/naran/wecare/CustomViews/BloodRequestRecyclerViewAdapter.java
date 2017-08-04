@@ -15,8 +15,10 @@ import android.widget.TextView;
 import com.naran.wecare.Models.Notification;
 import com.naran.wecare.R;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +38,9 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
     private Date tomDate = new Date(currentDate.getTime() - (1000 * 60 * 60 * 24));
 
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+    DateFormat format2=new SimpleDateFormat("dd");
+
+    private Calendar c = Calendar.getInstance();
 
     public BloodRequestRecyclerViewAdapter(Context context, List<Notification> notificationList) {
         this.context = context;
@@ -65,25 +70,58 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         String dateCheck = notification.getDonation_date();
 
 
-        int status = 0;
+
+
+//        try {
+//            date = dateFormatter.parse(dateCheck);
+//            if (date.before(tomDate)) {
+//                holder.donation_date.setText(R.string.donation_expired);
+//                holder.call_button.setVisibility(View.INVISIBLE);
+//                holder.donation_type.setVisibility(View.INVISIBLE);
+//
+//            }else{
+//
+//                holder.donation_date.setText(notification.getDonation_date());
+//                holder.call_button.setVisibility(View.VISIBLE);
+//                holder.donation_type.setVisibility(View.VISIBLE);
+//
+//            }
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+
         try {
-            date = dateFormatter.parse(dateCheck);
+            Date date1 =dateFormatter.parse(dateCheck);
+            String finalDay=format2.format(date1);
 
-            if (date.before(tomDate)){
+            int dayOfWeek = c.get(Calendar.DAY_OF_MONTH);
 
-                status = 1;
+            int day = Integer.parseInt(finalDay);
 
+            int checkDaysRemaining = day - dayOfWeek ;
+
+            System.out.println(checkDaysRemaining);
+
+            if (checkDaysRemaining < 0){
+
+                holder.donation_date.setText("DONATION EXPIRED");
+                holder.call_button.setVisibility(View.VISIBLE);
+                holder.donation_type.setVisibility(View.VISIBLE);
+
+            }else if (checkDaysRemaining == 1){
+
+                holder.donation_date.setText("TODAY");
+
+            }else {
+
+                holder.donation_date.setText(" "+checkDaysRemaining +"  DAYS LEFT");
             }
+
 
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-        if (status == 1){
-
-//            holder.donation_date.setText(R.string.not_available);
-//            holder.call_button.setVisibility(View.INVISIBLE);
-//            holder.donation_type.setVisibility(View.INVISIBLE);
-
         }
 
 
@@ -148,4 +186,6 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
 
         }
     }
+
+
 }

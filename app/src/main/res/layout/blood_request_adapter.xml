@@ -41,6 +41,18 @@
                    />
 
                <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Time : "
+                   android:textAllCaps="true"
+                   android:textSize="@dimen/notification_data_text_size"
+                   android:textStyle="bold"
+                   android:layout_marginStart="5dp"
+                   />
+
+
+
+               <TextView
                    android:id="@+id/adapter_donation_type"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -48,7 +60,7 @@
                    android:textAllCaps="true"
                    android:textSize="@dimen/notification_data_text_size"
                    android:textStyle="bold"
-                   android:layout_marginStart="10dp"
+                   android:layout_marginStart="1dp"
                    />
 
 
@@ -61,7 +73,7 @@
                >
                <ImageView
                    android:id="@+id/call_button_request"
-                   android:layout_width="wrap_content"
+                   android:layout_width="match_parent"
                    android:layout_height="20dp"
                    android:text="Call now"
                    android:src="@drawable/call"
@@ -90,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:background="#b3eeeeee"
+            android:background="#4eafe8f7"
             >
 
             <LinearLayout
@@ -100,7 +112,7 @@
                 android:layout_weight="3"
                 android:orientation="vertical"
                 android:padding="4dp"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="8dp"
                 >
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +16,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -39,7 +43,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class BloodBankFragment extends WeCareFragment {
@@ -56,12 +63,19 @@ public class BloodBankFragment extends WeCareFragment {
         View view = View.inflate(getActivity(), R.layout.fragment_blood_bank, null);
         initiliseView(view);
         initialiseListener();
-        setUpRecyclerView();
         getBloodBankData();
+        setUpRecyclerView();
         return view;
     }
 
     private void setUpRecyclerView() {
+
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
+//        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(layoutManager1);
+        organizationList = new ArrayList<>();
+        organizationAdapter = new OrganizationAdapter(getContext(), organizationList);
+        recyclerView.setAdapter(organizationAdapter);
 
 
     }
@@ -69,7 +83,7 @@ public class BloodBankFragment extends WeCareFragment {
     @Override
     protected void initiliseView(View view) {
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewDonationEvent);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewBloodBank);
         swipeView = (SwipeRefreshLayout) view.findViewById(R.id.swipe);
         myAni = AnimationUtils.loadAnimation(getContext(), R.anim.down_from_top);
 
@@ -79,11 +93,12 @@ public class BloodBankFragment extends WeCareFragment {
                 Color.RED
         );
 
-        FloatingActionButton myFab = (FloatingActionButton) view.findViewById(R.id.addEvent);
+        FloatingActionButton editData = (FloatingActionButton) view.findViewById(R.id.editData);
+        editData.setVisibility(View.INVISIBLE);
 
         if (SharedPrefManager.getInstance(getContext()).isOrgLoggedIn()) {
 
-            myFab.setOnClickListener(new View.OnClickListener() {
+            editData.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
                     if (SharedPrefManager.getInstance(getContext()).isOrgLoggedIn()) {
@@ -100,13 +115,11 @@ public class BloodBankFragment extends WeCareFragment {
 
         }
 
-        myFab.setVisibility(View.GONE);
-
 
         if (SharedPrefManager.getInstance(getContext()).isOrgLoggedIn()) {
 
-            myFab.setVisibility(View.VISIBLE);
-            myFab.startAnimation(myAni);
+            editData.setVisibility(View.VISIBLE);
+            editData.startAnimation(myAni);
 
 
         }
@@ -122,7 +135,8 @@ public class BloodBankFragment extends WeCareFragment {
             @Override
             public void onRefresh() {
 
-                        swipeView.setRefreshing(false);
+                organizationList.clear();
+                getBloodBankData();
 
             }
         });
@@ -132,7 +146,7 @@ public class BloodBankFragment extends WeCareFragment {
     }
 
     private void getBloodBankData() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlConstants.GET_BLOOD_DATABASE_URL, new com.android.volley.Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, UrlConstants.GET_BLOOD_BANK, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -143,25 +157,25 @@ public class BloodBankFragment extends WeCareFragment {
                     JSONArray jsonArray = new JSONArray(response);
 
                     for (int i = 0; i < jsonArray.length(); i++) {
+
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String org_name = jsonObject.getString(UrlConstants.KEY_ORG_NAME);
-                        String update_date = jsonObject.getString(UrlConstants.KEY_UPDATE_DATE);
-                        String contact_number = jsonObject.getString(UrlConstants.KEY_ORG_CONTACT_NUMBER);
-                        String aP = jsonObject.getString(UrlConstants.KEY_AP);
-                        String aN = jsonObject.getString(UrlConstants.KEY_AN);
-                        String bP = jsonObject.getString(UrlConstants.KEY_BP);
-                        String bN = jsonObject.getString(UrlConstants.KEY_BN);
-                        String abP = jsonObject.getString(UrlConstants.KEY_ABP);
-                        String abN = jsonObject.getString(UrlConstants.KEY_ABN);
-                        String oP = jsonObject.getString(UrlConstants.KEY_OP);
-                        String oN = jsonObject.getString(UrlConstants.KEY_ON);
+                        String username = jsonObject.getString(UrlConstants.KEY_ORG_USER_NAME);
+                        String contact_number = jsonObject.getString(UrlConstants.KEY_ORG_CONTACT);
+
+                        String aP = jsonObject.getString("aPositive");
+                        String aN = jsonObject.getString("aNegative");
+                        String bP = jsonObject.getString("bPositive");
+                        String bN = jsonObject.getString("bNegative");
+                        String abP = jsonObject.getString("abPositive");
+                        String abN = jsonObject.getString("abNegative");
+                        String oP = jsonObject.getString("oPositive");
+                        String oN = jsonObject.getString("oNegative");
 
                         Organization org = new Organization();
 
-                        org.setOrg_name(org_name);
-                        org.setUpdate_date(update_date);
-                        org.setContact_number(contact_number);
+                        org.setUserName(username);
+                        org.setContactNumber(contact_number);
                         org.setaP(aP);
                         org.setaN(aN);
                         org.setbP(bP);
@@ -170,11 +184,12 @@ public class BloodBankFragment extends WeCareFragment {
                         org.setAbN(abN);
                         org.setoP(oP);
                         org.setoN(oN);
-                        organizationList.add(org);
 
+                        organizationList.add(org);
 
                     }
                     organizationAdapter.notifyDataSetChanged();
+                    swipeView.setRefreshing(false);
 
 
                 } catch (JSONException e) {
@@ -187,6 +202,10 @@ public class BloodBankFragment extends WeCareFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Toast.makeText(getContext(), "No internet Connection", Toast.LENGTH_SHORT).show();
+                swipeView.setRefreshing(false);
+
+
             }
         }) {
 
@@ -194,11 +213,12 @@ public class BloodBankFragment extends WeCareFragment {
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
 
                 try {
+                    organizationList.clear();
                     Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
                     if (cacheEntry == null) {
                         cacheEntry = new Cache.Entry();
                     }
-                    final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
+                    final long cacheHitButRefreshed = 1 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
                     final long cacheExpired = 4 * 60 * 60 * 1000; // in 4 hours this cache entry expires completely
                     long now = System.currentTimeMillis();
                     final long softExpire = now + cacheHitButRefreshed;
@@ -248,16 +268,75 @@ public class BloodBankFragment extends WeCareFragment {
 
         ImageView cross = (ImageView) dialog.findViewById(R.id.cross);
         ImageView done = (ImageView) dialog.findViewById(R.id.done);
+
+
+        TextView orgName = (TextView) dialog.findViewById(R.id.org_full_name);
+        final String org_name = SharedPrefManager.getInstance(getContext()).getOrgUsername();
+
+        orgName.setText(org_name);
+
+        final EditText aP = (EditText) dialog.findViewById(R.id.aP);
+        final EditText aN = (EditText) dialog.findViewById(R.id.aN);
+        final EditText bP = (EditText) dialog.findViewById(R.id.bP);
+        final EditText bN = (EditText) dialog.findViewById(R.id.bN);
+        final EditText oP = (EditText) dialog.findViewById(R.id.oP);
+        final EditText oN = (EditText) dialog.findViewById(R.id.oN);
+        final EditText abP = (EditText) dialog.findViewById(R.id.abP);
+        final EditText abN = (EditText) dialog.findViewById(R.id.abN);
+
+
+
+
         cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
+
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.POST_BLOOD_BANK, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getContext(), "Oops ! Some error occur :( " + error, Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        params.put("org_name",org_name);
+                        params.put("aPositive",aP.getText().toString());
+                        params.put("aNegative",aN.getText().toString());
+                        params.put("bPositive",bP.getText().toString());
+                        params.put("bNegative",bN.getText().toString());
+                        params.put("oPositive",oP.getText().toString());
+                        params.put("oNegative",oN.getText().toString());
+                        params.put("abPositive",abP.getText().toString());
+                        params.put("abNegative",abN.getText().toString());
+
+                        return params;
+                    }
+                };
+
+
+                RequestQueue rqueue = Volley.newRequestQueue(getContext());
+                rqueue.add(stringRequest);
             }
         });
 
@@ -272,4 +351,5 @@ public class BloodBankFragment extends WeCareFragment {
 
 
     }
+
 }

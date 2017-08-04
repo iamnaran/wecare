@@ -61,7 +61,6 @@ public class BloodDonorsDatabaseAdapter extends RecyclerView.Adapter<BloodDonors
         });
 
 
-
         Animation animation = AnimationUtils.loadAnimation(context,
                 (position > lastPosition) ? R.anim.up_from_bottom
                         : R.anim.down_from_top);
@@ -111,7 +110,7 @@ public class BloodDonorsDatabaseAdapter extends RecyclerView.Adapter<BloodDonors
 
     }
 
-    public  void setFilter(List<BloodDatabase> bloodDatabases){
+    public void setFilter(List<BloodDatabase> bloodDatabases){
 
         bloodDatabaseList = new ArrayList<>();
         bloodDatabaseList.addAll(bloodDatabases);

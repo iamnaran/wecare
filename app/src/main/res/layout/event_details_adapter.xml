@@ -18,10 +18,22 @@
             android:layout_height="wrap_content"
             android:padding="4dp">
 
+            <ImageView
+                android:id="@+id/addAlarm"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/app_name"
+                android:textStyle="bold"
+                android:tint="#898c8c"
+                app:srcCompat="@drawable/ic_alarm_add_black_24dp" />
+
+
+
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:gravity="center"
                 >
@@ -29,7 +41,7 @@
                 <TextView
                     android:id="@+id/event_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:fontFamily="serif"
                     android:text="Nepal Blood Event"
                     android:textAllCaps="true"
@@ -41,15 +53,10 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/call_button"
-                    android:layout_width="20dp"
+                    android:layout_width="50dp"
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:scaleType="fitCenter"
@@ -57,18 +64,6 @@
 
                     />
 
-                <ImageView
-                    android:id="@+id/addAlarm"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/app_name"
-                    android:textStyle="bold"
-                    android:tint="#898c8c"
-                    app:srcCompat="@drawable/ic_alarm_add_black_24dp" />
-
-
-            </RelativeLayout>
 
 
         </LinearLayout>
@@ -85,7 +80,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <LinearLayout
                 android:id="@+id/home"
@@ -209,15 +205,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:orientation="vertical"
-                android:tint="#777777">
+                android:tint="#777777"
+                >
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="20dp"
-                    android:src="@drawable/donate"
-                    android:tint="#e20a0a"
-                    />
+                    <ImageView
+                        android:id="@+id/imageDonate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="20dp"
+                        android:src="@drawable/donate"
+                        android:tint="#e20a0a"
+                        android:contentDescription="@string/app_name" />
+
+
+
 
 
             </LinearLayout>

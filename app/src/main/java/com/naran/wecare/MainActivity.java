@@ -2,6 +2,7 @@ package com.naran.wecare;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -20,7 +21,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,12 +29,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -51,7 +53,9 @@ import com.naran.wecare.fcm.MySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,13 +66,18 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
     int sYear;
     int sMonth;
     int sDay;
-    String date = "";
+    private Date date;
+    String datePicked = "";
     private Toolbar toolbar;
     private LinearLayout bottomNavigation;
     private ImageView home, location, search, user;
     private ImageView lastSelectedImageView;
     AlertDialog progressDialog;
     int buttonStatus = 0;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+
+    private Date currentDate = new Date();
+    private Date todayDate = new Date(currentDate.getTime());
 
 
     @Override
@@ -79,6 +88,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
         sendToken();
         initiliseView();
         initialiseListener();
+
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -130,7 +140,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
     private void setUpBottomNavigation(ImageView view) {
         if (lastSelectedImageView != null) {
-            lastSelectedImageView.setColorFilter(Color.parseColor("#FF03071E"));
+            lastSelectedImageView.setColorFilter(Color.parseColor("#000000"));
         }
         view.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         lastSelectedImageView = view;
@@ -185,6 +195,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_add_request) {
 
             final EditText full_name;
@@ -195,7 +206,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
             final EditText donation_place;
             final EditText donation_type;
             Button buttonPost;
-            Spinner spinner1, spinner2, spinner3;
+            Spinner spinner1, spinner2;
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             LayoutInflater layoutInflater = getLayoutInflater();
@@ -213,12 +224,11 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
             contact_number = (EditText) customView.findViewById(R.id.post_donation_contact_number);
             donation_date = (EditText) customView.findViewById(R.id.post_donation_date);
             donation_place = (EditText) customView.findViewById(R.id.post_donation_place);
-            donation_type = (EditText) customView.findViewById(R.id.post_donation_type);
+            donation_type = (EditText) customView.findViewById(R.id.post_donation_type); // changed to date
             buttonPost = (Button) customView.findViewById(R.id.button_post_request);
 
             spinner1 = (Spinner) customView.findViewById(R.id.spinner1);
             spinner2 = (Spinner) customView.findViewById(R.id.spinner2);
-            spinner3 = (Spinner) customView.findViewById(R.id.spinner3);
 
             spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -244,15 +254,24 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
                 }
             });
-            spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                    donation_type.setText(parent.getItemAtPosition(position).toString());
-                }
-
+            donation_type.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+                public void onClick(View v) {
+
+
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    TimePickerDialog mTimePicker;
+                    mTimePicker = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            donation_type.setText( selectedHour + ":" + selectedMinute);
+                        }
+                    }, hour, minute, true);//Yes 24 hour time
+                    mTimePicker.setTitle("Select Time");
+                    mTimePicker.show();
 
                 }
             });
@@ -274,11 +293,16 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                    date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                    donation_date.setText(date);
+                                    datePicked = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                                    donation_date.setText(datePicked);
+
+
+
 
                                 }
                             }, sYear, sMonth, sDay);
+                    datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
                     datePickerDialog.show();
 
 
@@ -354,9 +378,9 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
             if (alertDialog1.getWindow() != null)
                 alertDialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                alertDialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                alertDialog1.getWindow().getAttributes().windowAnimations = Animation.ABSOLUTE;
-                alertDialog1.show();
+            alertDialog1.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            alertDialog1.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
+            alertDialog1.show();
 
 
         }
@@ -364,7 +388,8 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
             if (SharedPrefManager.getInstance(this).isLoggedIn() || SharedPrefManager.getInstance(this).isOrgLoggedIn()) {
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.Theme_Design_Light_BottomSheetDialog);
                 LayoutInflater layoutInflater = getLayoutInflater();
                 final View customView = layoutInflater.inflate(R.layout.user_details_popup, null);
                 builder.setView(customView);
@@ -375,12 +400,18 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
                 textViewUsername = (TextView) customView.findViewById(R.id.textViewUsername);
                 textViewUserEmail = (TextView) customView.findViewById(R.id.textViewUseremail);
+
+
                 buttonLogout = (Button) customView.findViewById(R.id.buttonLogout);
 
                 textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
                 textViewUsername.setText(SharedPrefManager.getInstance(this).getUsername());
-                textViewUserEmail.setText(SharedPrefManager.getInstance(this).getOrgEmail());
-                textViewUsername.setText(SharedPrefManager.getInstance(this).getOrgUsername());
+
+                if (SharedPrefManager.getInstance(this).isOrgLoggedIn()) {
+                    textViewUserEmail.setText(SharedPrefManager.getInstance(this).getOrgEmail());
+                    textViewUsername.setText(SharedPrefManager.getInstance(this).getOrgUsername());
+                }
+
 
                 buttonLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -396,7 +427,12 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
             } else {
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+//                ##########################################################################################################
+//                LOGIN register organization
+
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.Theme_Design_Light_BottomSheetDialog);
                 LayoutInflater layoutInflater = getLayoutInflater();
                 final View customView = layoutInflater.inflate(R.layout.login_pop__layout, null);
                 builder.setView(customView);
@@ -461,6 +497,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
                             final String username = editTextUser.getText().toString().trim();
                             final String password = editTextPass.getText().toString().trim();
+
                             if (username.isEmpty() || password.isEmpty()) {
                                 editTextUser.setError(" All fields are mandatory");
                                 editTextPass.setError("All fields are mandatory");
@@ -621,6 +658,9 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
                                                 progressDialog.dismiss();
+                                                if(error instanceof ServerError){
+
+                                                }
 
                                                 Toast.makeText(getApplicationContext(), " Something went wrong.", Toast.LENGTH_SHORT).show();
 
@@ -648,18 +688,14 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
     }
 
     public void sendToken() {
-        Toast.makeText(this, "Welcome to We Care", Toast.LENGTH_SHORT).show();
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.FCM_PREF), Context.MODE_PRIVATE);
-        final String token = sharedPreferences.getString(getString(R.string.FCM_TOKEN),"");
+        final String token = sharedPreferences.getString(getString(R.string.FCM_TOKEN), "");
         Log.e("Token", token);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UrlConstants.URL_FCM, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                Toast.makeText(getApplicationContext(), response , Toast.LENGTH_SHORT).show();
-
 
 
             }
@@ -667,15 +703,13 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getApplicationContext(), " Error in receiving token", Toast.LENGTH_SHORT).show();
 
             }
-        })
-        {
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("app_id",token);
+                params.put("app_id", token);
                 return params;
             }
         };

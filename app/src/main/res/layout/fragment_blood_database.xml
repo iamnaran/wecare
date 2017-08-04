@@ -15,17 +15,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusableInTouchMode="true"
 
-            <SearchView
-                android:id="@+id/searchView"
-                style="@style/Widget.AppCompat.SearchView"
+            >
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:focusableInTouchMode="true"
-                android:queryHint="search blood donors">
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_border_form"
+                android:layout_margin="5dp"
+                >
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:background="@android:color/transparent"
+                    android:queryHint="search blood donors">
 
-            </SearchView>
+                </SearchView>
+
+
+            </LinearLayout>
+
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewBloodDB"
@@ -43,7 +56,7 @@
         android:id="@+id/addUser"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="left|bottom"
         android:layout_margin="20dp"
         android:tint="#fff"
         app:srcCompat="@drawable/ic_note_add_black_24dp" />

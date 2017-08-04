@@ -23,7 +23,6 @@ public class UrlConstants {
 
     public static final String POST_BLOOD_REQUEST_URL = BASE_URL + "postBloodRequest.php/";
     public static final String GET_BLOOD_REQUEST_URL = BASE_URL + "getBloodRequest.php/";
-    public static final String GET_NEW_BLOOD_REQUEST_URL = BASE_URL + "getNewBloodRequest.php/";
 
     public static final String KEY_FULLNAME = "full_name";
     public static final String KEY_BLOOD_TYPE = "blood_type";
@@ -36,7 +35,7 @@ public class UrlConstants {
     //blood database
 
     public static final String GET_BLOOD_DATABASE_URL = BASE_URL + "blood/getBloodDatabase.php/";
-    public static final String POST_BLOOD_DATABASE_URL = BASE_URL + "blood/postBloodDatabase.php/";
+    public static final String POST_BLOOD_DATABASE_URL = BASE_URL + "postUserData.php/";
 
     public static final String KEY_AGE = "age";
     public static final String KEY_SEX = "sex";
@@ -60,16 +59,21 @@ public class UrlConstants {
 
     // Blood  bank data
 
-    public static final String KEY_ORG_NAME = "org_name";
-    public static final String KEY_UPDATE_DATE = "update_date";
-    public static final String KEY_ORG_CONTACT_NUMBER = "contact_number";
-    public static final String KEY_AP = "'aPositive'";
-    public static final String KEY_AN = "'aNegative'";
-    public static final String KEY_BP = "'bPositive'";
-    public static final String KEY_BN = "'bNegative'";
-    public static final String KEY_OP = "'oPositive'";
-    public static final String KEY_ON = "'oNegative'";
-    public static final String KEY_ABP = "'abPositive'";
-    public static final String KEY_ABN = "'abNegative'";
+    public static final String KEY_ORG_USER_NAME = "org_name";
+    public static final String KEY_ORG_CONTACT = "contact_number";
+
+    // BLOOD BANK
+
+    public static final String POST_BLOOD_BANK = BASE_URL + "organization/org/postData.php/";
+    public static final String GET_BLOOD_BANK = BASE_URL + "organization/org/getData.php/";
+
+
+    // DELETE RECORDS
+
+    public static final String DELETE_REQUEST = BASE_URL + "delete/blood_request.php/";
+    public static final String DELETE_EVENT = BASE_URL + "delete/donation_event.php/";
+
+
+
 
 }
