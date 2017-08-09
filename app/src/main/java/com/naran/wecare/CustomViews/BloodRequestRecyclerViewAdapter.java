@@ -62,9 +62,8 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         final Notification notification = notificationList.get(position);
         holder.full_name.setText(notification.getFull_name());
         holder.blood_type.setText(notification.getBlood_type());
-        holder.donation_date.setText(notification.getDonation_date());
         holder.donation_place.setText(notification.getDonation_place());
-        holder.donation_type.setText(notification.getDonation_type());
+        holder.donation_date.setText(notification.getDonation_date());
         holder.donation_amount.setText(notification.getBlood_amount());
 
         String dateCheck = notification.getDonation_date();
@@ -104,23 +103,44 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
 
             System.out.println(checkDaysRemaining);
 
-            if (checkDaysRemaining < 0){
-
-                holder.donation_date.setText("DONATION EXPIRED");
-                holder.call_button.setVisibility(View.VISIBLE);
+//            if (checkDaysRemaining > 1){
+//
+//                holder.iconTime.setVisibility(View.VISIBLE);
+//                holder.donation_date.setText(" "+checkDaysRemaining +"  days left");
+//                holder.donation_type.setText("Time : "+notification.getDonation_type());
+//
+//            }
+            if(checkDaysRemaining == 0){
                 holder.donation_type.setVisibility(View.VISIBLE);
+                holder.donation_date.setText(" TODAY ");
+                holder.donation_type.setText(notification.getDonation_type());
+                holder.iconTime.setVisibility(View.VISIBLE);
 
-            }else if (checkDaysRemaining == 1){
+            }
+            else {
 
-                holder.donation_date.setText("TODAY");
+                if (checkDaysRemaining < 0){
+                    holder.call_button.setVisibility(View.INVISIBLE);
+                    holder.iconTime.setVisibility(View.INVISIBLE);
+                    holder.donation_date.setText("CLOSED");
+                    holder.donation_type.setVisibility(View.INVISIBLE);
 
-            }else {
 
-                holder.donation_date.setText(" "+checkDaysRemaining +"  DAYS LEFT");
+                }else {
+                    holder.donation_type.setText(checkDaysRemaining+" days left");
+
+                    holder.call_button.setVisibility(View.VISIBLE);
+                    holder.iconTime.setVisibility(View.VISIBLE);
+                    holder.donation_date.setVisibility(View.VISIBLE);
+
+
+                }
+
+
             }
 
 
-        } catch (ParseException e) {
+        } catch (ParseException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
@@ -141,6 +161,9 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         Animation animation = AnimationUtils.loadAnimation(context,
                 (position > lastPosition) ? R.anim.up_from_bottom
                         : R.anim.down_from_top);
+
+
+
         holder.itemView.startAnimation(animation);
         lastPosition = position;
 
@@ -172,6 +195,7 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
         private TextView donation_type;
         private TextView donation_amount;
         private ImageView call_button;
+        private ImageView iconTime;
 
         private ViewHolder(View itemView) {
             super(itemView);
@@ -181,6 +205,7 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
             donation_date = (TextView) itemView.findViewById(R.id.adapter_donation_date);
             donation_place = (TextView) itemView.findViewById(R.id.adapter_donation_place);
             call_button = (ImageView) itemView.findViewById(R.id.call_button_request);
+            iconTime = (ImageView) itemView.findViewById(R.id.iconTime);
             donation_type = (TextView) itemView.findViewById(R.id.adapter_donation_type);
             donation_amount = (TextView) itemView.findViewById(R.id.adapter_blood_amount);
 

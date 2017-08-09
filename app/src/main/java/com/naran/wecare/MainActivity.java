@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -40,6 +41,7 @@ import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.naran.wecare.Activity.DeleteActivity;
 import com.naran.wecare.Activity.WeCareActivity;
 import com.naran.wecare.Fragments.BloodBankFragment;
 import com.naran.wecare.Fragments.BloodDatabaseFragment;
@@ -134,7 +136,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_ENTER_MASK);
         fragmentTransaction.commit();
     }
 
@@ -396,12 +398,11 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                 builder.create();
                 final AlertDialog alertDialog2 = builder.show();
                 TextView textViewUsername, textViewUserEmail;
-                final Button buttonLogout;
+                final Button buttonLogout , buttonDelete;
 
                 textViewUsername = (TextView) customView.findViewById(R.id.textViewUsername);
                 textViewUserEmail = (TextView) customView.findViewById(R.id.textViewUseremail);
-
-
+                buttonDelete = (Button) customView.findViewById(R.id.buttonDelete);
                 buttonLogout = (Button) customView.findViewById(R.id.buttonLogout);
 
                 textViewUserEmail.setText(SharedPrefManager.getInstance(this).getUserEmail());
@@ -420,6 +421,17 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
                         SharedPrefManager.getInstance(getApplicationContext()).orgLogout();
                         alertDialog2.dismiss();
                         Toast.makeText(MainActivity.this, "Logged out :( ", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog2.dismiss();
+
+                        Intent intent = new Intent(MainActivity.this, DeleteActivity.class);
+                        startActivity(intent);
 
                     }
                 });

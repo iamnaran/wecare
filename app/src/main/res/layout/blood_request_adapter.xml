@@ -26,41 +26,43 @@
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:layout_weight="3"
+
                >
 
 
                <TextView
                    android:id="@+id/adapter_donation_date"
-                   android:layout_width="wrap_content"
+                   android:layout_width="80dp"
                    android:layout_height="wrap_content"
-                   android:text="2017-06-17"
+                   android:text="2012-29-13"
                    android:textSize="@dimen/notification_data_text_size"
                    android:textStyle="bold"
+                   android:layout_gravity="center"
                    android:layout_marginStart="5dp"
                    android:textColor="#635f5f"
+                   android:gravity="center"
                    />
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Time : "
-                   android:textAllCaps="true"
-                   android:textSize="@dimen/notification_data_text_size"
-                   android:textStyle="bold"
-                   android:layout_marginStart="5dp"
+               <ImageView
+                   android:id="@+id/iconTime"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp"
+                   android:layout_gravity="center"
+                   android:tint="#635f5f"
+                   android:layout_marginStart="4dp"
+                   app:srcCompat="@drawable/ic_av_timer_black_24dp"
                    />
-
-
 
                <TextView
                    android:id="@+id/adapter_donation_type"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="Tomorrow"
-                   android:textAllCaps="true"
+                   android:layout_gravity="center"
                    android:textSize="@dimen/notification_data_text_size"
                    android:textStyle="bold"
-                   android:layout_marginStart="1dp"
+                   android:textColor="#635f5f"
+                   android:layout_marginStart="4dp"
                    />
 
 
@@ -102,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:background="#4eafe8f7"
+            android:background="#b3eeeeee"
             >
 
             <LinearLayout
@@ -111,9 +113,36 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:orientation="vertical"
-                android:padding="4dp"
+                android:padding="5dp"
                 android:layout_marginStart="8dp"
                 >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Blood Amount : "
+                        android:textSize="@dimen/notification_text_size"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/adapter_blood_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" ... pints"
+                        android:textSize="@dimen/notification_data_text_size"
+                        android:textStyle="bold"
+
+                        />
+
+
+                </LinearLayout>
 
 
                 <LinearLayout
@@ -167,32 +196,7 @@
 
 
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Blood Amount : "
-                        android:textSize="@dimen/notification_text_size"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/adapter_blood_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" ... pints"
-                        android:textSize="@dimen/notification_data_text_size"
-                        android:textStyle="bold"
-
-                        />
-
-
-                </LinearLayout>
 
 
             </LinearLayout>

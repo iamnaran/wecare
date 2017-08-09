@@ -45,7 +45,6 @@
     </string-array>
 
 
-
     <string-array name="donation_type">
         <item> urgent </item>
         <item> later </item>
@@ -62,8 +61,6 @@
     <string name="b_">B-</string>
     <string name="o">O-</string>
     <string name="update_available_blood_data">Update Available Blood Data</string>
-
-
 
 
     <string name="FCM_PREF">com.naran.wecare.fcm_pref</string>
@@ -91,6 +88,7 @@
     <string name="donation_expired">DONATION EXPIRED</string>
     <string name="pints">pints</string>
     <string name="status">Status</string>
+    <string name="c_n">Please delete post you have posted with your contact number !</string>
 
 
 </resources>
