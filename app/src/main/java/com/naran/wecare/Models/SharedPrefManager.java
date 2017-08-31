@@ -39,9 +39,7 @@ public class SharedPrefManager {
         editor.putInt(KEY_USER_ID, id);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USERNAME, username);
-
         editor.apply();
-
         return true;
     }
 
@@ -106,7 +104,6 @@ public class SharedPrefManager {
 
     }
     public String getOrgEmail(){
-
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME_ORG, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_ORG_EMAIL, null);
 

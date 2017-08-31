@@ -11,8 +11,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        app:cardUseCompatPadding="true"
-       app:cardElevation="2dp"
-       >
+       app:cardElevation="2dp">
 
        <LinearLayout
            android:id="@+id/changeLayout"
@@ -20,15 +19,12 @@
            android:layout_height="wrap_content"
            android:orientation="horizontal"
            android:padding="3dp"
-           android:baselineAligned="false"
-           >
+           android:baselineAligned="false">
+
            <LinearLayout
                android:layout_width="0dp"
                android:layout_height="wrap_content"
-               android:layout_weight="3"
-
-               >
-
+               android:layout_weight="3">
 
                <TextView
                    android:id="@+id/adapter_donation_date"

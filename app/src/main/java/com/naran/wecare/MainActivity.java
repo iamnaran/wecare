@@ -141,6 +141,9 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
     }
 
     private void setUpBottomNavigation(ImageView view) {
+
+        view.setColorFilter(R.color.toolbar_background);
+
         if (lastSelectedImageView != null) {
             lastSelectedImageView.setColorFilter(Color.parseColor("#000000"));
         }
@@ -506,6 +509,7 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
 
                         if (buttonStatus == 1) {
 // Login
+                            // FIX:
 
                             final String username = editTextUser.getText().toString().trim();
                             final String password = editTextPass.getText().toString().trim();

@@ -110,6 +110,7 @@ public class BloodRequestRecyclerViewAdapter extends RecyclerView.Adapter<BloodR
 //                holder.donation_type.setText("Time : "+notification.getDonation_type());
 //
 //            }
+
             if(checkDaysRemaining == 0){
                 holder.donation_type.setVisibility(View.VISIBLE);
                 holder.donation_date.setText(" TODAY ");

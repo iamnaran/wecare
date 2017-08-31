@@ -26,6 +26,8 @@ public class BloodDonorsDatabaseAdapter extends RecyclerView.Adapter<BloodDonors
     private Context context;
     private List<BloodDatabase> bloodDatabaseList;
     private int lastPosition = -1;
+
+
     public BloodDonorsDatabaseAdapter(Context context, List<BloodDatabase> bloodDatabaseList) {
         this.context = context;
         this.bloodDatabaseList = bloodDatabaseList;
