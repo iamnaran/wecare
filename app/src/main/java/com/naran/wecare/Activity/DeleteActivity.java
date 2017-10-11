@@ -1,10 +1,12 @@
 package com.naran.wecare.Activity;
 
 import android.app.AlertDialog;
-import android.os.Build;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,21 +31,22 @@ public class DeleteActivity extends AppCompatActivity {
     private Button btnDltEvent, btnDltRequest;
     private EditText contactNumber;
     AlertDialog progressDialog;
+    Toolbar toolbar;
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        }
+    }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete);
-        contactNumber = (EditText) findViewById(R.id.phone_number);
 
+        contactNumber = (EditText) findViewById(R.id.phone_number);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         btnDltRequest = (Button) findViewById(R.id.dlt_request);
         btnDltEvent = (Button) findViewById(R.id.dlt_event);
 
@@ -67,6 +70,32 @@ public class DeleteActivity extends AppCompatActivity {
             }
         });
 
+        configureToolbar();
+
+
+    }
+
+    private void configureToolbar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            toolbar.setTitleTextColor(Color.WHITE);
+            setTitle("Delete Posts");
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -92,7 +121,7 @@ public class DeleteActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(getApplicationContext(), " "+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), " " + error, Toast.LENGTH_SHORT).show();
 
                     progressDialog.hide();
 
@@ -138,7 +167,7 @@ public class DeleteActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(getApplicationContext(), " "+error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), " " + error, Toast.LENGTH_SHORT).show();
 
                     progressDialog.hide();
 

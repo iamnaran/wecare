@@ -115,10 +115,10 @@ public class MainActivity extends WeCareActivity implements View.OnClickListener
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         bottomNavigation = (LinearLayout) findViewById(R.id.bottom_navigation);
         home = (ImageView) findViewById(R.id.home);
-        lastSelectedImageView = home;
         search = (ImageView) findViewById(R.id.search);
         location = (ImageView) findViewById(R.id.location);
         user = (ImageView) findViewById(R.id.user);
+        lastSelectedImageView = home;
 
     }
 

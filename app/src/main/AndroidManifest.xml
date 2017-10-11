@@ -20,11 +20,13 @@
             android:name=".MainActivity"
             android:label="@string/app_name"></activity>
         <activity android:name=".Welcome.WelcomeActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <service
@@ -42,8 +44,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Activity.DeleteActivity"
-                    android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".Activity.DeleteActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
